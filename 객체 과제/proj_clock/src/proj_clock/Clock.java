@@ -57,21 +57,28 @@ class Make_clock{
 	}
 	// goNsec 메서드
 	void goNsec(int s){
-		sec += s;
-		if (sec >= 60) { // 초 단위가 60초 이상이 되면 
-			sec = s%60; // 분으로 올려준다.
-			int plus_m = s/60;
-			minute += plus_m;
+		// 초 단위로 바꾸어 더해줌 
+		int origin_time = hour*60*60 + minute*60 + sec;
+		origin_time += s;
+				
+		// 다시 시:분:초 형태로 바꿔줌 
+		if (origin_time < 60){ // 초 단위만 있을 때 
+			sec = origin_time;
 		}
-		if (minute >= 60) { // 분 단위가 60분 이상이 되면 
-			int plus_h = s/(60*60); // 시로 올려준다.
-			minute %= 60; 
-			hour += plus_h;
-		}
-		if (hour >= 24) { // 시 단위가 24시 이상이 되면 초기화 
+		else if (origin_time < 3600){ // 1분 이상 60분 미만일 때 
+			sec = origin_time%60;
+			minute = origin_time/60;
 			hour = 0;
-			minute = 0;
-			sec = 0;
+		}
+		else{ // 1시간 이상일 때 
+			sec = origin_time%60;
+			minute = origin_time/3600%60;
+			hour = origin_time/3600;
+			if (hour > 24) {
+				hour = 0;
+				minute = 0;
+				sec = 0;
+			}
 		}
 	}
 	// back 메서드
