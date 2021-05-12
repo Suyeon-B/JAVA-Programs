@@ -135,7 +135,7 @@ class Phonebook {
 				
 				// 다시 원래 배열로 복사 및 관리번호 수정 
 				System.arraycopy(temp, 0, phonelist, 0, 99);
-				if(phonelist[i].name != null) {
+				if(phonelist[i].number != 0) {
 						phonelist[i].number -= 1;
 				}
 			}
