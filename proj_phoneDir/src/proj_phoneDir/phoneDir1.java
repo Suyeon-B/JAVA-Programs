@@ -1,6 +1,6 @@
 package proj_phoneDir;
 import java.util.Scanner;
-import java.util.ArrayList;
+import java.util.Arrays;
 
 
 class Phone { 
@@ -10,7 +10,7 @@ class Phone {
 	String email;
 }
 
-public class phoneDir1 {
+public class phoneDir1 { // 객체가 도입되지 않은 프로그램 
 	public static void main(String[] args) {
 		Scanner scanner = new Scanner(System.in);
 		Phone[] phonelist = new Phone[100];
@@ -37,11 +37,11 @@ public class phoneDir1 {
 				System.out.println("전화번호 목록을 확인합니다.");
 				System.out.println("(관리번호 | 성함 | 전화번호 | 이메일)");
 				for(int i=0;i<100;i++) {
-					//if (phonelist[0].name == null) {
-					//	System.out.println("!!! 아직 입력된 번호가 없습니다.");
-					//	break;
-					//}
-					if (phonelist[i].name != null) {
+					if (phonelist[0].name == null) { // 등록된 번호가 없을 때 
+						System.out.println("!!! 아직 입력된 번호가 없습니다.");
+						break;
+					}
+					if (phonelist[i].name != null) { // 등록된 번호가 있다면 출력 
 						System.out.print(phonelist[i].number + ": ");
 						System.out.println(phonelist[i].name + " " + phonelist[i].phone + " " + phonelist[i].email);
 					}
@@ -59,7 +59,7 @@ public class phoneDir1 {
 				String email = scanner.next();
 				
 				for(int i=0;i<100;i++) {	
-					// 빈 공간을 찾아 차례로 입력한다.
+					// 빈 공간을 찾아 입력한다.
 					if (phonelist[i].name == null) {
 						phonelist[i].number = i+1;
 						phonelist[i].name = name;
@@ -74,7 +74,7 @@ public class phoneDir1 {
 						System.out.println("이메일: " + phonelist[i].email);
 					
 					
-						// 등록 완료 
+						// 입력 완료 
 						break;
 					}
 				}			
@@ -82,8 +82,7 @@ public class phoneDir1 {
 			
 			// 3: 전화번호 삭제
 			else if (choice == 3) {
-				System.out.println(phonelist[0].name);
-				if (phonelist[0].name == null) {
+				if (phonelist[0].name == null) { // 등록된 번호가 없을 때 
 					System.out.println("!!! 아직 입력된 번호가 없습니다.");
 					System.out.print("다시 메뉴를 선택하세요: ");
 					continue;
@@ -91,7 +90,7 @@ public class phoneDir1 {
 				// 관리번호 입력 메세지 출력 
 				System.out.print("삭제할 관리번호를 입력하세요: ");
 				int num = scanner.nextInt();
-outerLoop:		for(int i=0;i<100;i++) {	
+				for(int i=0;i<100;i++) {	
 					// 관리번호에 해당하는 연락처 삭제 
 					if (phonelist[i].number == num) {
 						// 삭제 확인 메세지 출력 
@@ -101,35 +100,31 @@ outerLoop:		for(int i=0;i<100;i++) {
 						System.out.println("연락처: " + phonelist[i].phone);
 						System.out.println("이메일: " + phonelist[i].email);
 						
-						// 삭제 후 뒤 연락처를 앞으로 끌고 온다. 
-						for(int j=i+1;j<100;j++) {
-							if (phonelist[j].name != null) {
-								//System.out.println(phonelist[0].name);
-								phonelist[i].name = phonelist[j].name;
-								//System.out.println(phonelist[0].name);
-								phonelist[i].phone = phonelist[j].phone;
-								phonelist[i].email = phonelist[j].email;
-								phonelist[i].number = phonelist[j].number-1;
-								//System.out.println(phonelist[0].number);
-							}
-							else {
-								phonelist[i].number = phonelist[j].number-1;
-								phonelist[i].name = null;
-								break outerLoop;
-							}
+						// 삭제용 임시 배열 생성 
+						Phone[] temp = new Phone[100];
+						// 초기화 
+						for(int x=0;x<100;x++) {
+							temp[x] = new Phone(); 
 						}
+						// 삭제한 곳을 제외한 나머지 복사 
+						System.arraycopy(phonelist, 0, temp, 0, i);
+						System.arraycopy(phonelist, i+1, temp, i, phonelist.length-i-1);
 						
+						// 다시 원래 배열로 복사 및 관리번호 수정 
+						System.arraycopy(temp, 0, phonelist, 0, 99);
+						if(phonelist[i].name != null) {
+								phonelist[i].number -= 1;
+						}
 						// 삭제 완료 
 						continue;
 					}
-					
-				}		
+				}
+			}		
 				
-			}
 			
 			// 4: 전화번호 수정
 			else if (choice == 4) {
-				if (phonelist[0].name == null) {
+				if (phonelist[0].name == null) { // 등록된 번호가 없을 때 
 					System.out.println("!!! 아직 입력된 번호가 없습니다.");
 					System.out.print("다시 메뉴를 선택하세요: ");
 					continue;
@@ -143,6 +138,7 @@ outerLoop:		for(int i=0;i<100;i++) {
 						System.out.print("수정할 연락처를 입력하세요: ");
 						String newPhone = scanner.next();
 						
+						// 수정한 결과 표시 
 						System.out.print(phonelist[i].phone + " -> ");
 						phonelist[i].phone = newPhone;
 						System.out.print(phonelist[i].phone+"\n");
@@ -153,14 +149,17 @@ outerLoop:		for(int i=0;i<100;i++) {
 					
 				}		
 			}
-			else if (choice == 5) {
+			
+			else if (choice == 5) { // 프로그램 종료 
 				System.out.println("프로그램을 종료합니다. ");
 				break;
 			}
-			else {
+			
+			else { // 1~5 이외의 번호를 입력했을 때 
 				System.out.println("올바른 번호를 입력하세요.");
 			}
-			// show menu 
+			
+			// 반복용 메뉴 표시 
 			System.out.println("\n메뉴를 선택하세요. \n"
 								+ "1: 전체 내역 보기 \n"
 								+ "2: 신규 연락처 등록\n"
