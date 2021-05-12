@@ -94,6 +94,11 @@ class PlayGame {
 		}
 		else {
 			cityList[location].owner = playerList[player].player;
+			for(int i=1;i<=9;i++) {
+				if (playerList[player].ownCities[i] == null) {
+					playerList[player].ownCities[i] = Cities[location];
+				}
+			}
 		}
 	}
 	
@@ -127,8 +132,12 @@ class PlayGame {
 	}
 
 
-public class OurMarble {}
+public class OurMarble {
+	
+
 	public static void main(String[] args) {
+		
+	
 		PlayGame game = new PlayGame();
 	
 		// 게임 시작
@@ -140,8 +149,8 @@ public class OurMarble {}
 				game.randDiceNum(i);
 				game.showResult(i);
 			}
-			turn -=1 ;
+			turn -=1;
 		}
 	}
-
 }
+	
