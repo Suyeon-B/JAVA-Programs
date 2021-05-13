@@ -133,19 +133,14 @@ class PlayGame {
 
 
 public class OurMarble {
-	
-
 	public static void main(String[] args) {
-		
-	
 		PlayGame game = new PlayGame();
-	
+		
 		// 게임 시작
 		int turn = 30;
-		
 		while (turn > 0) {
 			// 주사위 뽑고 게임 시작 
-			for(int i=1;i<=2;i++) {
+			for (int i=1;i<=2;i++) {
 				game.randDiceNum(i);
 				game.showResult(i);
 			}
@@ -153,4 +148,3 @@ public class OurMarble {
 		}
 	}
 }
-	
