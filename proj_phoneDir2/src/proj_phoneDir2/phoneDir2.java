@@ -47,7 +47,7 @@ class Phonebook {
 	Phone[] phonelist = new Phone[100];
 	
 	Phonebook() { // 생성자 
-		for(int i=1;i<=100;i++) {
+		for(int i=1;i<100;i++) {
 			phonelist[i-1] = new Phone(); 
 		}
 	}
