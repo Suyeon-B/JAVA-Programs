@@ -52,7 +52,7 @@ class PlayGame {
 	PlayGame() { 
 		// 생성자 : 플레이어의 순번 지정과 초기화 
 		int count=0;
-		for(int i=0;i<360;i++) { // 최대 6씩 나온다고 해도 30턴 동안 180개의 도시테이블이 필요함.
+		for(int i=0;i<360;i++) {
 			if (count == 9) {
 				count = 0;
 			}
@@ -107,9 +107,6 @@ class PlayGame {
 					cityList[i].owner = playerList[player].player+1;
 				}
 			}
-			//cityList[location].owner = playerList[player].player+1; // 모든 테이블 판에 소유주 저장해야함 
-			
-			
 			playerList[player].budget -= 300;
 			System.out.printf("player %d이 %s(을)를 구매했습니다. (남은 자금): %d", player+1, cityList[location].city, playerList[player].budget);
 			for(int i=0;i<10;i++) {
@@ -153,7 +150,7 @@ class PlayGame {
 		// 게임판 그리는 메서드 
 		// ownCities와 각 플레이어의 위치(playerList[i].diceSum) 정보를 가지고 구현할 수 있다.
 		for (int i=0;i<2;i++) {
-			System.out.println("---------------------------------------------------------");
+			System.out.println("---------------------------------------------------------------------------");
 			System.out.printf("player %d (소유 도시): ", i+1);
 			for (int j=0; j<10; j++) {
 				if (playerList[i].ownCities[j] != null) {
@@ -162,7 +159,7 @@ class PlayGame {
 				}
 			}
 			System.out.println("\n");
-			System.out.println("---------------------------------------------------------");
+			System.out.println("---------------------------------------------------------------------------");
 		}
 	}
 	void winner() {
