@@ -70,21 +70,21 @@ class PlayGame {
 	}
 	
 	void showResult(int i) {
-		System.out.printf("%S(%d)\n", Cities[playerList[i].diceSum], cityList[playerList[i].diceSum].owner);
-		if (Cities[playerList[i].diceSum] == "empty"){
-			buyCity(i, playerList[i].diceSum);
+		System.out.printf("\n%S(%d)\n", Cities[playerList[i-1].diceSum-1], cityList[playerList[i-1].diceSum-1].owner+1);
+		if (Cities[playerList[i-1].diceSum] == "empty"){
+			buyCity(i-1, playerList[i-1].diceSum);
 		}
 		else {
-			payToll(i, playerList[i].diceSum);
+			payToll(i-1, playerList[i-1].diceSum);
 		}
 			
 	}
 	
 	void randDiceNum(int i) { // 플레이어의 주사위 숫자 랜덤으로 뽑기 
-		playerList[i].diceNum = (int) (Math.random() * 6) +1;
-		playerList[i].diceSum += playerList[i].diceNum;
+		playerList[i-1].diceNum = (int) (Math.random() * 6) +1;
+		playerList[i-1].diceSum += playerList[i-1].diceNum;
 			
-		System.out.printf("player %d: %d", i, playerList[i].diceNum);
+		System.out.printf("player %d: %d", i, playerList[i-1].diceNum);
 	}
 	
 	void buyCity(int player, int location) {
@@ -118,9 +118,9 @@ class PlayGame {
 			// 통행료 지불 
 			else {
 				playerList[player].budget -= 600;
-				playerList[2].budget += 600;
+				playerList[1].budget += 600;
 				System.out.printf("player %d (남은 자금): ", player, +  playerList[player].budget);
-				if (player == 1) {
+				if (player == 0) {
 					System.out.printf("player %d (남은 자금): ", 2, +  playerList[2].budget);
 				}
 				else {
@@ -131,13 +131,11 @@ class PlayGame {
 		}
 	}
 
-
+}
 public class OurMarble {
 	public static void main(String[] args) {
 		PlayGame game = new PlayGame();
-		
-		// 게임 시작
-		int turn = 30;
+		int turn=30;
 		while (turn > 0) {
 			// 주사위 뽑고 게임 시작 
 			for (int i=1;i<=2;i++) {
