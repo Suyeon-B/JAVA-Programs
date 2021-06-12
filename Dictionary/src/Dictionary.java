@@ -68,10 +68,6 @@ public class Dictionary {
 					 System.out.println("뜻 "+dic.get(word));
 				 }
 				 
-				 //if (word.equals(".")){
-				//	 System.out.print("프로그램을 종료합니다.");
-				//	 break;
-				 //}
 			 }
 			 
 		 } catch(IOException e) { 
